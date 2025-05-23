@@ -92,7 +92,12 @@ chrome.commands.onCommand.addListener(function (command) {
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'loading' && /^https?:/.test(tab.url)) {
-    reloadExtensions()
+      chrome.storage.sync.get('reloadExtension', async function (item) {
+
+        if (!item.reloadExtension) { return; }
+
+        reloadExtensions()
+      });
   }
 });
 

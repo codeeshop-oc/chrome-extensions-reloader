@@ -3,8 +3,10 @@ function saveOptions() {
 	console.log('in save options');
 
   const reloadPageVal = document.getElementById('reload_page_after_extension_reload').checked;
+  const reloadExtensionVal = document.getElementById('reload_extension_after_every_load').checked;
   chrome.storage.sync.set({
-    'reloadPage': reloadPageVal
+    'reloadPage': reloadPageVal,
+    'reloadExtension': reloadExtensionVal,
   }, function () {
     // Update status to let user know options were saved.
     const statusEl = document.getElementById('status');
@@ -19,9 +21,11 @@ function saveOptions() {
 // Restores select box and checkbox state using the preferences stored in chrome.storage.
 function restoreOptions() {
   chrome.storage.sync.get({
-    'reloadPage': false
+    'reloadPage': false,
+    'reloadExtension': false
   }, function (items) {
     document.getElementById('reload_page_after_extension_reload').checked = items.reloadPage;
+    document.getElementById('reload_extension_after_every_load').checked = items.reloadExtensionVal;
   });
 }
 
