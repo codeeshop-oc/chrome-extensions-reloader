@@ -90,6 +90,12 @@ chrome.commands.onCommand.addListener(function (command) {
   }
 });
 
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  if (changeInfo.status === 'loading' && /^https?:/.test(tab.url)) {
+    reloadExtensions()
+  }
+});
+
 // intercept url
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
